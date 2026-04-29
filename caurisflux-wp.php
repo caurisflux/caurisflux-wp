@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: CaurisFlux for WooCommerce
- * Plugin URI:  https://caurisflux.com
+ * Plugin URI:  https://caurisflux.com/woocommerce
  * Description: Acceptez les paiements Mobile Money (Wave, Orange Money, MTN, Free Money, Moov…) et Carte Bancaire via CaurisFlux. Multi-devises (XOF/XAF/GHS/NGN), checkout hébergé sécurisé, webhooks signés, mode sandbox.
  * Version:     1.0.0
  * Author:      Cauris Pay
