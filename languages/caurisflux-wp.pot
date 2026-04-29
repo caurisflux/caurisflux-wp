@@ -1,0 +1,253 @@
+# Copyright (C) 2026 Cauris Pay
+# This file is distributed under the same license as the CaurisFlux for WooCommerce plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: CaurisFlux for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/caurispay/caurisflux-wp/issues\n"
+"POT-Creation-Date: 2026-04-29 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language-Team: \n"
+"X-Generator: caurisflux-wp 1.0.0\n"
+"X-Domain: caurisflux-wp\n"
+
+# == Plugin meta ==
+msgid "CaurisFlux"
+msgstr ""
+
+msgid "CaurisFlux for WooCommerce"
+msgstr ""
+
+# == Activation / version checks ==
+msgid "CaurisFlux nécessite PHP %2$s ou supérieur. Version détectée: %1$s."
+msgstr ""
+
+msgid "CaurisFlux nécessite WordPress %s ou supérieur."
+msgstr ""
+
+msgid "CaurisFlux désactivé : PHP %2$s+ requis (vous avez %1$s)."
+msgstr ""
+
+msgid "CaurisFlux nécessite WooCommerce activé pour fonctionner."
+msgstr ""
+
+msgid "CaurisFlux : WooCommerce %2$s+ recommandé (vous avez %1$s)."
+msgstr ""
+
+# == Settings page ==
+msgid "Réglages"
+msgstr ""
+
+msgid "Activer / Désactiver"
+msgstr ""
+
+msgid "Activer CaurisFlux pour les paiements"
+msgstr ""
+
+msgid "Titre affiché au client"
+msgstr ""
+
+msgid "Apparaît sur la page de checkout WooCommerce."
+msgstr ""
+
+msgid "Mobile Money & Carte Bancaire"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Texte court sous le titre."
+msgstr ""
+
+msgid "Payez avec Wave, Orange Money, MTN, Free Money, Moov ou Carte Bancaire."
+msgstr ""
+
+msgid "Environnement"
+msgstr ""
+
+msgid "Sandbox (test)"
+msgstr ""
+
+msgid "Production (live)"
+msgstr ""
+
+msgid "Sandbox pour tester sans mouvements de fonds réels."
+msgstr ""
+
+msgid "Clé API CaurisFlux"
+msgstr ""
+
+msgid "Format <code>pk_xxx:sk_xxx</code> (utilisez les clés <code>pk_test_</code>/<code>sk_test_</code> en sandbox)."
+msgstr ""
+
+msgid "Secret du webhook"
+msgstr ""
+
+msgid "Secret HMAC utilisé pour vérifier l'authenticité des notifications de paiement. <strong>Obligatoire en production.</strong>"
+msgstr ""
+
+msgid "URL de webhook"
+msgstr ""
+
+msgid "À configurer dans votre dashboard CaurisFlux (Réglages → Webhooks) :<br><code>%s</code>"
+msgstr ""
+
+msgid "Numéro de téléphone du client"
+msgstr ""
+
+msgid "Pré-remplir le numéro depuis la commande WooCommerce"
+msgstr ""
+
+msgid "Logs de debug"
+msgstr ""
+
+msgid "Activer les logs détaillés"
+msgstr ""
+
+msgid "Logs visibles dans %s."
+msgstr ""
+
+# == Test webhook button ==
+msgid "Tester l'intégration"
+msgstr ""
+
+msgid "Envoyer un webhook de test"
+msgstr ""
+
+msgid "Saisissez l'ID d'une commande pending pour simuler un payment.completed."
+msgstr ""
+
+msgid "ID de commande WooCommerce :"
+msgstr ""
+
+msgid "Event à simuler :"
+msgstr ""
+
+msgid "Envoi en cours…"
+msgstr ""
+
+msgid "Webhook simulé depuis l'admin."
+msgstr ""
+
+# == Settings validation ==
+msgid "Clé API non renseignée."
+msgstr ""
+
+msgid "Format invalide. Attendu : pk_xxx:sk_xxx"
+msgstr ""
+
+msgid "Sandbox sélectionné mais clés en mode \"live\" détectées. Utilisez des clés pk_test_/sk_test_."
+msgstr ""
+
+msgid "Production sélectionné mais clés en mode \"sandbox\" détectées. Utilisez des clés pk_live_/sk_live_."
+msgstr ""
+
+msgid "Webhook secret manquant. Sans ce secret, les notifications de paiement seront rejetées en production."
+msgstr ""
+
+# == Gateway runtime ==
+msgid "Commande introuvable."
+msgstr ""
+
+msgid "Configuration CaurisFlux invalide. Contactez le marchand."
+msgstr ""
+
+msgid "Échec initialisation du paiement : %s"
+msgstr ""
+
+msgid "Réponse CaurisFlux invalide (URL de checkout manquante)."
+msgstr ""
+
+msgid "Commande #%1$s — %2$s"
+msgstr ""
+
+msgid "Paiement CaurisFlux initié. Transaction : %s"
+msgstr ""
+
+msgid "erreur inconnue"
+msgstr ""
+
+# == Webhook events ==
+msgid "Paiement CaurisFlux confirmé. Transaction : %1$s. Provider : %2$s."
+msgstr ""
+
+msgid "CaurisFlux %1$s — raison : %2$s. %3$s"
+msgstr ""
+
+msgid "Remboursement CaurisFlux"
+msgstr ""
+
+msgid "Remboursement CaurisFlux reçu : %1$s %2$s. Motif : %3$s"
+msgstr ""
+
+# == Order metabox ==
+msgid "CaurisFlux Payment"
+msgstr ""
+
+msgid "Cette commande n'utilise pas CaurisFlux."
+msgstr ""
+
+msgid "SANDBOX"
+msgstr ""
+
+msgid "LIVE"
+msgstr ""
+
+msgid "Statut"
+msgstr ""
+
+msgid "Transaction ID"
+msgstr ""
+
+msgid "Provider"
+msgstr ""
+
+msgid "Vérifier le statut"
+msgstr ""
+
+msgid "Accès refusé."
+msgstr ""
+
+msgid "Nonce invalide."
+msgstr ""
+
+msgid "CaurisFlux : aucune transaction associée à vérifier."
+msgstr ""
+
+msgid "CaurisFlux : configuration invalide, vérification impossible."
+msgstr ""
+
+msgid "CaurisFlux : échec vérification statut (%s)."
+msgstr ""
+
+msgid "CaurisFlux : statut vérifié manuellement → SUCCESS. %s"
+msgstr ""
+
+msgid "CaurisFlux : statut vérifié manuellement → %1$s. %2$s"
+msgstr ""
+
+msgid "CaurisFlux : statut actuel = %1$s. %2$s"
+msgstr ""
+
+# == Admin notices ==
+msgid "Corriger maintenant"
+msgstr ""
+
+msgid "L'API CaurisFlux semble indisponible. Les paiements peuvent échouer. Vérifiez le status sur status.caurisflux.com."
+msgstr ""
+
+# == Client errors ==
+msgid "Clé API CaurisFlux invalide ou non configurée."
+msgstr ""
+
+msgid "Impossible de sérialiser la requête en JSON."
+msgstr ""
+
+msgid "Erreur API CaurisFlux"
+msgstr ""
+
+# == Block label ==
+msgid "CaurisFlux Mobile Money & Carte Bancaire"
+msgstr ""

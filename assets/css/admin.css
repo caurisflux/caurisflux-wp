@@ -1,0 +1,107 @@
+/* CaurisFlux — admin styles (chargés UNIQUEMENT sur ?section=caurisflux et metabox commande)
+   Tous les sélecteurs sont préfixés par .cflux- ou un attribut ID/data spécifique
+   pour éviter toute fuite vers d'autres pages admin ou un autre plugin.        */
+
+/* === Settings page (WC → Payments → CaurisFlux) === */
+
+.woocommerce_page_wc-settings .wc_gateways .gateway[data-gateway_id="caurisflux"]
+  .wc-payment-gateway-method-name {
+  font-weight: 600;
+}
+
+.woocommerce_page_wc-settings #mainform .form-table input[type="password"][id*="caurisflux"] {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+
+.woocommerce_page_wc-settings #mainform .form-table tr[id*="webhook_url_display"] td {
+  background: #fffbeb;
+  border-left: 3px solid #f59e0b;
+  padding: 12px 16px;
+  border-radius: 4px;
+}
+
+.woocommerce_page_wc-settings #mainform .form-table td code {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  user-select: all;
+}
+
+#caurisflux-test-webhook-result {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+/* === Order metabox === */
+
+.cflux-meta { font-size: 13px; }
+
+.cflux-meta-empty {
+  color: #6b7280;
+  font-style: italic;
+  margin: 0;
+}
+
+.cflux-meta-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.cflux-meta-badge-sandbox { background: #fef3c7; color: #92400e; }
+.cflux-meta-badge-live    { background: #d1fae5; color: #065f46; }
+
+.cflux-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.cflux-meta-row:last-of-type { border-bottom: none; }
+
+.cflux-meta-label {
+  color: #6b7280;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.cflux-meta-value { color: #111827; font-weight: 500; }
+.cflux-meta-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: #1f2937;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 3px;
+  padding: 2px 6px;
+  user-select: all;
+  word-break: break-all;
+}
+
+.cflux-meta-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.cflux-pill-success { background: #d1fae5; color: #065f46; }
+.cflux-pill-pending { background: #fef3c7; color: #92400e; }
+.cflux-pill-failed  { background: #fee2e2; color: #991b1b; }
+.cflux-pill-neutral { background: #f3f4f6; color: #374151; }
+
+.cflux-meta-actions {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+}
+.cflux-meta-actions .button { width: 100%; text-align: center; }

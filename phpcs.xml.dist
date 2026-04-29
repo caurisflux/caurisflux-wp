@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ruleset name="CaurisFlux WP">
+	<description>WordPress Coding Standards for CaurisFlux WooCommerce plugin.</description>
+
+	<file>.</file>
+	<exclude-pattern>vendor/</exclude-pattern>
+	<exclude-pattern>node_modules/</exclude-pattern>
+	<exclude-pattern>tests/</exclude-pattern>
+
+	<arg value="psn"/>
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+
+	<rule ref="WordPress">
+		<exclude name="WordPress.Files.FileName"/>
+		<exclude name="Universal.Files.SeparateFunctionsFromOO.Mixed"/>
+	</rule>
+
+	<config name="testVersion" value="7.4-"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<config name="minimum_supported_wp_version" value="6.0"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array" value="caurisflux-wp"/>
+		</properties>
+	</rule>
+</ruleset>

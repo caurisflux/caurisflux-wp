@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Composer (dev only)
+vendor/
+composer.lock
+
+# PHPCS / PHPStan caches
+.phpcs-cache
+.phpstan-cache/
+
+# Build artifacts
+*.zip
+*.tar.gz
+
+# Logs
+*.log
