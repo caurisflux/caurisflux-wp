@@ -203,7 +203,7 @@ final class CaurisFlux_Webhook {
 			'amount'                 => (float) $order->get_total(),
 			'currency'               => $order->get_currency(),
 			'failureReason'          => 'simulation',
-			'failureMessage'         => __( 'Webhook simulé depuis l\'admin.', 'caurisflux-wp' ),
+			'failureMessage'         => __( 'Webhook simulé depuis l\'admin.', 'caurisflux-for-woocommerce' ),
 		);
 
 		$normalized_event = str_replace( '.', '_', $event );
@@ -272,7 +272,7 @@ final class CaurisFlux_Webhook {
 		$order->add_order_note(
 			sprintf(
 				/* translators: %1$s = transaction id, %2$s = provider */
-				__( 'Paiement CaurisFlux confirmé. Transaction : %1$s. Provider : %2$s.', 'caurisflux-wp' ),
+				__( 'Paiement CaurisFlux confirmé. Transaction : %1$s. Provider : %2$s.', 'caurisflux-for-woocommerce' ),
 				$tx_id,
 				$provider
 			)
@@ -297,7 +297,7 @@ final class CaurisFlux_Webhook {
 			'failed',
 			sprintf(
 				/* translators: %1$s = event, %2$s = reason, %3$s = message */
-				__( 'CaurisFlux %1$s — raison : %2$s. %3$s', 'caurisflux-wp' ),
+				__( 'CaurisFlux %1$s — raison : %2$s. %3$s', 'caurisflux-for-woocommerce' ),
 				$event,
 				$reason,
 				$message
@@ -313,12 +313,12 @@ final class CaurisFlux_Webhook {
 		}
 		$amount   = isset( $data['amount'] ) ? (float) $data['amount'] : 0;
 		$currency = (string) ( $data['currency'] ?? $order->get_currency() );
-		$reason   = (string) ( $data['reason'] ?? __( 'Remboursement CaurisFlux', 'caurisflux-wp' ) );
+		$reason   = (string) ( $data['reason'] ?? __( 'Remboursement CaurisFlux', 'caurisflux-for-woocommerce' ) );
 
 		$order->add_order_note(
 			sprintf(
 				/* translators: %1$s = amount, %2$s = currency, %3$s = reason */
-				__( 'Remboursement CaurisFlux reçu : %1$s %2$s. Motif : %3$s', 'caurisflux-wp' ),
+				__( 'Remboursement CaurisFlux reçu : %1$s %2$s. Motif : %3$s', 'caurisflux-for-woocommerce' ),
 				$amount,
 				$currency,
 				$reason

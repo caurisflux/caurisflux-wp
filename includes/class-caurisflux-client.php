@@ -95,7 +95,7 @@ final class CaurisFlux_Client {
 		if ( '' === $this->api_key || false === strpos( $this->api_key, ':' ) ) {
 			return array(
 				'success' => false,
-				'error'   => __( 'Clé API CaurisFlux invalide ou non configurée.', 'caurisflux-wp' ),
+				'error'   => __( 'Clé API CaurisFlux invalide ou non configurée.', 'caurisflux-for-woocommerce' ),
 				'status'  => 0,
 			);
 		}
@@ -124,7 +124,7 @@ final class CaurisFlux_Client {
 			if ( false === $encoded ) {
 				return array(
 					'success' => false,
-					'error'   => __( 'Impossible de sérialiser la requête en JSON.', 'caurisflux-wp' ),
+					'error'   => __( 'Impossible de sérialiser la requête en JSON.', 'caurisflux-for-woocommerce' ),
 					'status'  => 0,
 				);
 			}
@@ -190,7 +190,7 @@ final class CaurisFlux_Client {
 
 		return array(
 			'success' => false,
-			'error'   => '' !== $last_error ? $last_error : __( 'Erreur API CaurisFlux', 'caurisflux-wp' ),
+			'error'   => '' !== $last_error ? $last_error : __( 'Erreur API CaurisFlux', 'caurisflux-for-woocommerce' ),
 			'data'    => $last_data,
 			'status'  => $last_status,
 		);

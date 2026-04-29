@@ -35,7 +35,7 @@ final class CaurisFlux_Order_Metabox {
 		foreach ( array_filter( $screens ) as $screen ) {
 			add_meta_box(
 				'caurisflux_order_metabox',
-				__( 'CaurisFlux Payment', 'caurisflux-wp' ),
+				__( 'CaurisFlux Payment', 'caurisflux-for-woocommerce' ),
 				array( __CLASS__, 'render' ),
 				$screen,
 				'side',
@@ -55,7 +55,7 @@ final class CaurisFlux_Order_Metabox {
 
 		if ( 'caurisflux' !== $order->get_payment_method() ) {
 			echo '<p class="cflux-meta-empty">';
-			echo esc_html__( 'Cette commande n\'utilise pas CaurisFlux.', 'caurisflux-wp' );
+			echo esc_html__( 'Cette commande n\'utilise pas CaurisFlux.', 'caurisflux-for-woocommerce' );
 			echo '</p>';
 			return;
 		}
@@ -71,16 +71,16 @@ final class CaurisFlux_Order_Metabox {
 		<div class="cflux-meta">
 			<?php if ( 'sandbox' === $env ) : ?>
 				<div class="cflux-meta-badge cflux-meta-badge-sandbox">
-					<?php esc_html_e( 'SANDBOX', 'caurisflux-wp' ); ?>
+					<?php esc_html_e( 'SANDBOX', 'caurisflux-for-woocommerce' ); ?>
 				</div>
 			<?php elseif ( 'live' === $env ) : ?>
 				<div class="cflux-meta-badge cflux-meta-badge-live">
-					<?php esc_html_e( 'LIVE', 'caurisflux-wp' ); ?>
+					<?php esc_html_e( 'LIVE', 'caurisflux-for-woocommerce' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<div class="cflux-meta-row">
-				<span class="cflux-meta-label"><?php esc_html_e( 'Statut', 'caurisflux-wp' ); ?></span>
+				<span class="cflux-meta-label"><?php esc_html_e( 'Statut', 'caurisflux-for-woocommerce' ); ?></span>
 				<span class="cflux-meta-pill <?php echo esc_attr( $status_pill_class ); ?>">
 					<?php echo esc_html( $status_label ); ?>
 				</span>
@@ -88,14 +88,14 @@ final class CaurisFlux_Order_Metabox {
 
 			<?php if ( '' !== $tx_id ) : ?>
 				<div class="cflux-meta-row">
-					<span class="cflux-meta-label"><?php esc_html_e( 'Transaction ID', 'caurisflux-wp' ); ?></span>
+					<span class="cflux-meta-label"><?php esc_html_e( 'Transaction ID', 'caurisflux-for-woocommerce' ); ?></span>
 					<code class="cflux-meta-code"><?php echo esc_html( $tx_id ); ?></code>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( '' !== $provider ) : ?>
 				<div class="cflux-meta-row">
-					<span class="cflux-meta-label"><?php esc_html_e( 'Provider', 'caurisflux-wp' ); ?></span>
+					<span class="cflux-meta-label"><?php esc_html_e( 'Provider', 'caurisflux-for-woocommerce' ); ?></span>
 					<span class="cflux-meta-value"><?php echo esc_html( $provider ); ?></span>
 				</div>
 			<?php endif; ?>
@@ -108,7 +108,7 @@ final class CaurisFlux_Order_Metabox {
 						data-order-id="<?php echo esc_attr( (string) $order->get_id() ); ?>"
 						data-nonce="<?php echo esc_attr( wp_create_nonce( self::NONCE_ACTION ) ); ?>"
 					>
-						<?php esc_html_e( 'Vérifier le statut', 'caurisflux-wp' ); ?>
+						<?php esc_html_e( 'Vérifier le statut', 'caurisflux-for-woocommerce' ); ?>
 					</button>
 					<span class="cflux-check-status-result"></span>
 				</div>
@@ -140,7 +140,7 @@ final class CaurisFlux_Order_Metabox {
 				var nonce = btn.getAttribute('data-nonce');
 				var result = btn.parentElement.querySelector('.cflux-check-status-result');
 				btn.disabled = true;
-				if (result) result.textContent = '<?php echo esc_js( __( 'Vérification…', 'caurisflux-wp' ) ); ?>';
+				if (result) result.textContent = '<?php echo esc_js( __( 'Vérification…', 'caurisflux-for-woocommerce' ) ); ?>';
 				var data = new FormData();
 				data.append('action', 'caurisflux_check_status');
 				data.append('order_id', orderId);
@@ -152,7 +152,7 @@ final class CaurisFlux_Order_Metabox {
 						if (result) {
 							result.textContent = arr[1] && arr[1].data && arr[1].data.message
 								? arr[1].data.message
-								: (arr[0] ? '<?php echo esc_js( __( 'OK', 'caurisflux-wp' ) ); ?>' : '<?php echo esc_js( __( 'Erreur', 'caurisflux-wp' ) ); ?>');
+								: (arr[0] ? '<?php echo esc_js( __( 'OK', 'caurisflux-for-woocommerce' ) ); ?>' : '<?php echo esc_js( __( 'Erreur', 'caurisflux-for-woocommerce' ) ); ?>');
 						}
 						// Reload après 800ms si le statut a changé.
 						if (arr[0] && arr[1] && arr[1].data && arr[1].data.status_changed) {
@@ -176,24 +176,24 @@ final class CaurisFlux_Order_Metabox {
 	 */
 	public static function ajax_check_status(): void {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Accès refusé.', 'caurisflux-wp' ) ), 403 );
+			wp_send_json_error( array( 'message' => __( 'Accès refusé.', 'caurisflux-for-woocommerce' ) ), 403 );
 		}
 		check_ajax_referer( self::NONCE_ACTION );
 
 		$order_id = isset( $_POST['order_id'] ) ? (int) $_POST['order_id'] : 0;
 		$order    = $order_id > 0 ? wc_get_order( $order_id ) : null;
 		if ( ! $order ) {
-			wp_send_json_error( array( 'message' => __( 'Commande introuvable.', 'caurisflux-wp' ) ), 404 );
+			wp_send_json_error( array( 'message' => __( 'Commande introuvable.', 'caurisflux-for-woocommerce' ) ), 404 );
 		}
 
 		$tx_id = (string) $order->get_meta( self::META_TX_ID );
 		if ( '' === $tx_id ) {
-			wp_send_json_error( array( 'message' => __( 'Aucune transaction CaurisFlux associée.', 'caurisflux-wp' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Aucune transaction CaurisFlux associée.', 'caurisflux-for-woocommerce' ) ) );
 		}
 
 		$client = CaurisFlux_Client::from_settings();
 		if ( ! $client ) {
-			wp_send_json_error( array( 'message' => __( 'Configuration CaurisFlux invalide.', 'caurisflux-wp' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Configuration CaurisFlux invalide.', 'caurisflux-for-woocommerce' ) ) );
 		}
 
 		$response = $client->get_payment_status( $tx_id );
@@ -201,11 +201,11 @@ final class CaurisFlux_Order_Metabox {
 			$order->add_order_note(
 				sprintf(
 					/* translators: %s = error */
-					__( 'CaurisFlux : échec vérification statut (%s).', 'caurisflux-wp' ),
+					__( 'CaurisFlux : échec vérification statut (%s).', 'caurisflux-for-woocommerce' ),
 					$response['error'] ?? 'unknown'
 				)
 			);
-			wp_send_json_error( array( 'message' => $response['error'] ?? __( 'Erreur API', 'caurisflux-wp' ) ) );
+			wp_send_json_error( array( 'message' => $response['error'] ?? __( 'Erreur API', 'caurisflux-for-woocommerce' ) ) );
 		}
 
 		$payload = $response['data']['data'] ?? $response['data'];
@@ -215,7 +215,7 @@ final class CaurisFlux_Order_Metabox {
 		$status_changed   = false;
 		$response_message = sprintf(
 			/* translators: %s = status */
-			__( 'Statut: %s', 'caurisflux-wp' ),
+			__( 'Statut: %s', 'caurisflux-for-woocommerce' ),
 			strtoupper( $status )
 		);
 
@@ -225,14 +225,14 @@ final class CaurisFlux_Order_Metabox {
 				$order->add_order_note(
 					sprintf(
 						/* translators: %s = message */
-						__( 'CaurisFlux : statut vérifié manuellement → SUCCESS. %s', 'caurisflux-wp' ),
+						__( 'CaurisFlux : statut vérifié manuellement → SUCCESS. %s', 'caurisflux-for-woocommerce' ),
 						$message
 					)
 				);
 				$status_changed   = true;
-				$response_message = __( 'Paiement confirmé !', 'caurisflux-wp' );
+				$response_message = __( 'Paiement confirmé !', 'caurisflux-for-woocommerce' );
 			} else {
-				$response_message = __( 'Déjà payée.', 'caurisflux-wp' );
+				$response_message = __( 'Déjà payée.', 'caurisflux-for-woocommerce' );
 			}
 		} elseif ( in_array( $status, array( 'failed', 'expired', 'cancelled', 'canceled' ), true ) ) {
 			if ( 'failed' !== $order->get_status() ) {
@@ -240,7 +240,7 @@ final class CaurisFlux_Order_Metabox {
 					'failed',
 					sprintf(
 						/* translators: %1$s = status, %2$s = message */
-						__( 'CaurisFlux : statut vérifié manuellement → %1$s. %2$s', 'caurisflux-wp' ),
+						__( 'CaurisFlux : statut vérifié manuellement → %1$s. %2$s', 'caurisflux-for-woocommerce' ),
 						strtoupper( $status ),
 						$message
 					)
@@ -248,7 +248,7 @@ final class CaurisFlux_Order_Metabox {
 				$status_changed   = true;
 				$response_message = sprintf(
 					/* translators: %s = status */
-					__( 'Paiement %s.', 'caurisflux-wp' ),
+					__( 'Paiement %s.', 'caurisflux-for-woocommerce' ),
 					strtoupper( $status )
 				);
 			}
@@ -256,7 +256,7 @@ final class CaurisFlux_Order_Metabox {
 			$order->add_order_note(
 				sprintf(
 					/* translators: %1$s = status, %2$s = message */
-					__( 'CaurisFlux : statut actuel = %1$s. %2$s', 'caurisflux-wp' ),
+					__( 'CaurisFlux : statut actuel = %1$s. %2$s', 'caurisflux-for-woocommerce' ),
 					strtoupper( $status ),
 					$message
 				)

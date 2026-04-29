@@ -8,7 +8,7 @@
  * Author URI:  https://caurisflux.com/
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: caurisflux-wp
+ * Text Domain: caurisflux-for-woocommerce
  * Domain Path: /languages
  * Requires at least: 6.0
  * Requires PHP: 7.4
@@ -63,7 +63,7 @@ register_activation_hook(
 				esc_html(
 					sprintf(
 						/* translators: %1$s = current PHP, %2$s = required PHP */
-						__( 'CaurisFlux nécessite PHP %2$s ou supérieur. Version détectée: %1$s.', 'caurisflux-wp' ),
+						__( 'CaurisFlux nécessite PHP %2$s ou supérieur. Version détectée: %1$s.', 'caurisflux-for-woocommerce' ),
 						PHP_VERSION,
 						CAURISFLUX_MIN_PHP
 					)
@@ -76,7 +76,7 @@ register_activation_hook(
 				esc_html(
 					sprintf(
 						/* translators: %s = required WP version */
-						__( 'CaurisFlux nécessite WordPress %s ou supérieur.', 'caurisflux-wp' ),
+						__( 'CaurisFlux nécessite WordPress %s ou supérieur.', 'caurisflux-for-woocommerce' ),
 						CAURISFLUX_MIN_WP
 					)
 				)
@@ -135,7 +135,7 @@ add_action(
 add_action( 'plugins_loaded', 'caurisflux_init', 11 );
 
 function caurisflux_init(): void {
-	load_plugin_textdomain( 'caurisflux-wp', false, dirname( CAURISFLUX_PLUGIN_BASENAME ) . '/languages' );
+	load_plugin_textdomain( 'caurisflux-for-woocommerce', false, dirname( CAURISFLUX_PLUGIN_BASENAME ) . '/languages' );
 
 	// Runtime PHP version safety net (in case host downgraded).
 	if ( version_compare( PHP_VERSION, CAURISFLUX_MIN_PHP, '<' ) ) {
@@ -146,7 +146,7 @@ function caurisflux_init(): void {
 				echo esc_html(
 					sprintf(
 						/* translators: %1$s = current PHP version, %2$s = required version */
-						__( 'CaurisFlux désactivé : PHP %2$s+ requis (vous avez %1$s).', 'caurisflux-wp' ),
+						__( 'CaurisFlux désactivé : PHP %2$s+ requis (vous avez %1$s).', 'caurisflux-for-woocommerce' ),
 						PHP_VERSION,
 						CAURISFLUX_MIN_PHP
 					)
@@ -163,7 +163,7 @@ function caurisflux_init(): void {
 			'admin_notices',
 			static function () {
 				echo '<div class="notice notice-error"><p>';
-				echo esc_html__( 'CaurisFlux nécessite WooCommerce activé pour fonctionner.', 'caurisflux-wp' );
+				echo esc_html__( 'CaurisFlux nécessite WooCommerce activé pour fonctionner.', 'caurisflux-for-woocommerce' );
 				echo '</p></div>';
 			}
 		);
@@ -179,7 +179,7 @@ function caurisflux_init(): void {
 				echo esc_html(
 					sprintf(
 						/* translators: %1$s = current WC version, %2$s = required version */
-						__( 'CaurisFlux : WooCommerce %2$s+ recommandé (vous avez %1$s).', 'caurisflux-wp' ),
+						__( 'CaurisFlux : WooCommerce %2$s+ recommandé (vous avez %1$s).', 'caurisflux-for-woocommerce' ),
 						WC_VERSION,
 						CAURISFLUX_MIN_WC
 					)

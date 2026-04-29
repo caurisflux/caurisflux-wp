@@ -72,18 +72,18 @@ final class CaurisFlux_Settings {
 	public static function validate_api_key(): string {
 		$key = self::api_key();
 		if ( '' === $key ) {
-			return __( 'Clé API non renseignée.', 'caurisflux-wp' );
+			return __( 'Clé API non renseignée.', 'caurisflux-for-woocommerce' );
 		}
 		$parts = explode( ':', $key );
 		if ( 2 !== count( $parts ) || '' === $parts[0] || '' === $parts[1] ) {
-			return __( 'Format invalide. Attendu : pk_xxx:sk_xxx', 'caurisflux-wp' );
+			return __( 'Format invalide. Attendu : pk_xxx:sk_xxx', 'caurisflux-for-woocommerce' );
 		}
 		[ $pk, $sk ] = $parts;
 		if ( 0 !== stripos( $pk, 'pk_' ) ) {
-			return __( 'La clé publique doit commencer par "pk_".', 'caurisflux-wp' );
+			return __( 'La clé publique doit commencer par "pk_".', 'caurisflux-for-woocommerce' );
 		}
 		if ( 0 !== stripos( $sk, 'sk_' ) ) {
-			return __( 'La clé secrète doit commencer par "sk_".', 'caurisflux-wp' );
+			return __( 'La clé secrète doit commencer par "sk_".', 'caurisflux-for-woocommerce' );
 		}
 		return '';
 	}
@@ -103,10 +103,10 @@ final class CaurisFlux_Settings {
 		$key_is_live = ( false !== stripos( $pk, 'pk_live_' ) ) || ( false !== stripos( $sk, 'sk_live_' ) );
 
 		if ( 'sandbox' === $env && $key_is_live ) {
-			return __( 'Sandbox sélectionné mais clés "live" détectées. Utilisez pk_test_/sk_test_ ou passez en mode Production.', 'caurisflux-wp' );
+			return __( 'Sandbox sélectionné mais clés "live" détectées. Utilisez pk_test_/sk_test_ ou passez en mode Production.', 'caurisflux-for-woocommerce' );
 		}
 		if ( 'live' === $env && $key_is_test ) {
-			return __( 'Production sélectionnée mais clés "test" détectées. Utilisez pk_live_/sk_live_ ou passez en mode Sandbox.', 'caurisflux-wp' );
+			return __( 'Production sélectionnée mais clés "test" détectées. Utilisez pk_live_/sk_live_ ou passez en mode Sandbox.', 'caurisflux-for-woocommerce' );
 		}
 		return '';
 	}
@@ -129,7 +129,7 @@ final class CaurisFlux_Settings {
 			if ( ! in_array( $shop_currency, self::supported_currencies(), true ) ) {
 				return sprintf(
 					/* translators: %1$s = currency code, %2$s = supported list */
-					__( 'Devise WooCommerce "%1$s" non supportée par CaurisFlux. Devises acceptées : %2$s.', 'caurisflux-wp' ),
+					__( 'Devise WooCommerce "%1$s" non supportée par CaurisFlux. Devises acceptées : %2$s.', 'caurisflux-for-woocommerce' ),
 					$shop_currency,
 					implode( ', ', self::supported_currencies() )
 				);
@@ -141,7 +141,7 @@ final class CaurisFlux_Settings {
 			return $mismatch;
 		}
 		if ( '' === self::webhook_secret() && 'sandbox' !== self::environment() ) {
-			return __( 'Webhook secret manquant. Sans ce secret, les notifications de paiement seront rejetées en production.', 'caurisflux-wp' );
+			return __( 'Webhook secret manquant. Sans ce secret, les notifications de paiement seront rejetées en production.', 'caurisflux-for-woocommerce' );
 		}
 		return '';
 	}

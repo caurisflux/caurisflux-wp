@@ -49,7 +49,7 @@ final class CaurisFlux_Plugin {
 		$settings_url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=caurisflux' );
 		array_unshift(
 			$links,
-			'<a href="' . esc_url( $settings_url ) . '">' . esc_html__( 'Réglages', 'caurisflux-wp' ) . '</a>'
+			'<a href="' . esc_url( $settings_url ) . '">' . esc_html__( 'Réglages', 'caurisflux-for-woocommerce' ) . '</a>'
 		);
 		return $links;
 	}

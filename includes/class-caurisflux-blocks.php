@@ -58,37 +58,35 @@ final class CaurisFlux_Blocks extends \Automattic\WooCommerce\Blocks\Payments\In
 
 	private function build_inline_script(): string {
 		$icon_url = esc_url( CAURISFLUX_PLUGIN_URL . 'assets/images/logo.svg' );
-		$label    = esc_js( __( 'CaurisFlux Mobile Money & Carte Bancaire', 'caurisflux-wp' ) );
+		$label    = esc_js( __( 'CaurisFlux Mobile Money & Carte Bancaire', 'caurisflux-for-woocommerce' ) );
 
-		return <<<JS
-(function(){
-  if (!window.wc || !window.wc.wcBlocksRegistry) return;
-  var settings = (window.wc.wcSettings && window.wc.wcSettings.getSetting)
-    ? window.wc.wcSettings.getSetting('caurisflux_data', {}) : {};
-  var title = settings.title || '{$label}';
-  var description = settings.description || '';
-  var icon = settings.icon || '{$icon_url}';
-
-  var Label = function(){
-    return wp.element.createElement('span', { className: 'cflux-block-label' },
-      wp.element.createElement('img', { src: icon, alt: '', style: { width: 24, height: 24, marginRight: 8, verticalAlign: 'middle' } }),
-      title
-    );
-  };
-  var Content = function(){
-    return wp.element.createElement('div', { className: 'cflux-block-description' }, description);
-  };
-
-  window.wc.wcBlocksRegistry.registerPaymentMethod({
-    name: 'caurisflux',
-    label: wp.element.createElement(Label),
-    content: wp.element.createElement(Content),
-    edit:    wp.element.createElement(Content),
-    canMakePayment: function(){ return true; },
-    ariaLabel: title,
-    supports: { features: ['products'] }
-  });
-})();
-JS;
+		return "(function(){\n"
+			. "  if (!window.wc || !window.wc.wcBlocksRegistry) return;\n"
+			. "  var settings = (window.wc.wcSettings && window.wc.wcSettings.getSetting)\n"
+			. "    ? window.wc.wcSettings.getSetting('caurisflux_data', {}) : {};\n"
+			. "  var title = settings.title || '" . $label . "';\n"
+			. "  var description = settings.description || '';\n"
+			. "  var icon = settings.icon || '" . $icon_url . "';\n"
+			. "\n"
+			. "  var Label = function(){\n"
+			. "    return wp.element.createElement('span', { className: 'cflux-block-label' },\n"
+			. "      wp.element.createElement('img', { src: icon, alt: '', style: { width: 24, height: 24, marginRight: 8, verticalAlign: 'middle' } }),\n"
+			. "      title\n"
+			. "    );\n"
+			. "  };\n"
+			. "  var Content = function(){\n"
+			. "    return wp.element.createElement('div', { className: 'cflux-block-description' }, description);\n"
+			. "  };\n"
+			. "\n"
+			. "  window.wc.wcBlocksRegistry.registerPaymentMethod({\n"
+			. "    name: 'caurisflux',\n"
+			. "    label: wp.element.createElement(Label),\n"
+			. "    content: wp.element.createElement(Content),\n"
+			. "    edit:    wp.element.createElement(Content),\n"
+			. "    canMakePayment: function(){ return true; },\n"
+			. "    ariaLabel: title,\n"
+			. "    supports: { features: ['products'] }\n"
+			. "  });\n"
+			. "})();";
 	}
 }

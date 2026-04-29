@@ -10,8 +10,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language-Team: \n"
-"X-Generator: caurisflux-wp 1.0.0\n"
-"X-Domain: caurisflux-wp\n"
+"X-Generator: caurisflux-for-woocommerce 1.0.0\n"
+"X-Domain: caurisflux-for-woocommerce\n"
 
 # == Plugin meta ==
 msgid "CaurisFlux"

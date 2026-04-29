@@ -21,10 +21,10 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 
 	public function __construct() {
 		$this->id                 = 'caurisflux';
-		$this->method_title       = __( 'CaurisFlux', 'caurisflux-wp' );
+		$this->method_title       = __( 'CaurisFlux', 'caurisflux-for-woocommerce' );
 		$this->method_description = __(
 			'Paiements Mobile Money & Carte Bancaire en Afrique francophone via CaurisFlux. Le client est redirigé vers une page de paiement sécurisée.',
-			'caurisflux-wp'
+			'caurisflux-for-woocommerce'
 		);
 		$this->has_fields         = false;
 		$this->icon               = CAURISFLUX_PLUGIN_URL . 'assets/images/logo.svg';
@@ -34,8 +34,8 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 		$this->init_form_fields();
 		$this->init_settings();
 
-		$this->title       = $this->get_option( 'title', __( 'Mobile Money & Carte Bancaire', 'caurisflux-wp' ) );
-		$this->description = $this->get_option( 'description', __( 'Payez avec Wave, Orange Money, MTN, Free Money, Moov ou Carte Bancaire.', 'caurisflux-wp' ) );
+		$this->title       = $this->get_option( 'title', __( 'Mobile Money & Carte Bancaire', 'caurisflux-for-woocommerce' ) );
+		$this->description = $this->get_option( 'description', __( 'Payez avec Wave, Orange Money, MTN, Free Money, Moov ou Carte Bancaire.', 'caurisflux-for-woocommerce' ) );
 		$this->enabled     = $this->get_option( 'enabled', 'no' );
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -54,53 +54,53 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 
 		$this->form_fields = array(
 			'enabled'             => array(
-				'title'   => __( 'Activer / Désactiver', 'caurisflux-wp' ),
+				'title'   => __( 'Activer / Désactiver', 'caurisflux-for-woocommerce' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Activer CaurisFlux pour les paiements', 'caurisflux-wp' ),
+				'label'   => __( 'Activer CaurisFlux pour les paiements', 'caurisflux-for-woocommerce' ),
 				'default' => 'no',
 			),
 			'title'               => array(
-				'title'       => __( 'Titre affiché au client', 'caurisflux-wp' ),
+				'title'       => __( 'Titre affiché au client', 'caurisflux-for-woocommerce' ),
 				'type'        => 'text',
-				'description' => __( 'Apparaît sur la page de checkout WooCommerce.', 'caurisflux-wp' ),
-				'default'     => __( 'Mobile Money & Carte Bancaire', 'caurisflux-wp' ),
+				'description' => __( 'Apparaît sur la page de checkout WooCommerce.', 'caurisflux-for-woocommerce' ),
+				'default'     => __( 'Mobile Money & Carte Bancaire', 'caurisflux-for-woocommerce' ),
 				'desc_tip'    => true,
 			),
 			'description'         => array(
-				'title'       => __( 'Description', 'caurisflux-wp' ),
+				'title'       => __( 'Description', 'caurisflux-for-woocommerce' ),
 				'type'        => 'textarea',
-				'description' => __( 'Texte court sous le titre.', 'caurisflux-wp' ),
-				'default'     => __( 'Payez avec Wave, Orange Money, MTN, Free Money, Moov ou Carte Bancaire.', 'caurisflux-wp' ),
+				'description' => __( 'Texte court sous le titre.', 'caurisflux-for-woocommerce' ),
+				'default'     => __( 'Payez avec Wave, Orange Money, MTN, Free Money, Moov ou Carte Bancaire.', 'caurisflux-for-woocommerce' ),
 				'desc_tip'    => true,
 			),
 			'environment'         => array(
-				'title'       => __( 'Environnement', 'caurisflux-wp' ),
+				'title'       => __( 'Environnement', 'caurisflux-for-woocommerce' ),
 				'type'        => 'select',
 				'options'     => array(
-					'sandbox' => __( 'Sandbox (test)', 'caurisflux-wp' ),
-					'live'    => __( 'Production (live)', 'caurisflux-wp' ),
+					'sandbox' => __( 'Sandbox (test)', 'caurisflux-for-woocommerce' ),
+					'live'    => __( 'Production (live)', 'caurisflux-for-woocommerce' ),
 				),
 				'default'     => 'sandbox',
-				'description' => __( 'Sandbox pour tester sans mouvements de fonds réels.', 'caurisflux-wp' ),
+				'description' => __( 'Sandbox pour tester sans mouvements de fonds réels.', 'caurisflux-for-woocommerce' ),
 			),
 			'api_key'             => array(
-				'title'       => __( 'Clé API CaurisFlux', 'caurisflux-wp' ),
+				'title'       => __( 'Clé API CaurisFlux', 'caurisflux-for-woocommerce' ),
 				'type'        => 'password',
-				'description' => __( 'Format <code>pk_xxx:sk_xxx</code> (utilisez les clés <code>pk_test_</code>/<code>sk_test_</code> en sandbox).', 'caurisflux-wp' ),
+				'description' => __( 'Format <code>pk_xxx:sk_xxx</code> (utilisez les clés <code>pk_test_</code>/<code>sk_test_</code> en sandbox).', 'caurisflux-for-woocommerce' ),
 				'default'     => '',
 			),
 			'webhook_secret'      => array(
-				'title'       => __( 'Secret du webhook', 'caurisflux-wp' ),
+				'title'       => __( 'Secret du webhook', 'caurisflux-for-woocommerce' ),
 				'type'        => 'password',
-				'description' => __( 'Secret HMAC utilisé pour vérifier l\'authenticité des notifications de paiement. <strong>Obligatoire en production.</strong>', 'caurisflux-wp' ),
+				'description' => __( 'Secret HMAC utilisé pour vérifier l\'authenticité des notifications de paiement. <strong>Obligatoire en production.</strong>', 'caurisflux-for-woocommerce' ),
 				'default'     => '',
 			),
 			'webhook_url_display' => array(
-				'title'       => __( 'URL de webhook', 'caurisflux-wp' ),
+				'title'       => __( 'URL de webhook', 'caurisflux-for-woocommerce' ),
 				'type'        => 'title',
 				'description' => sprintf(
 					/* translators: %s = webhook URL */
-					__( 'À configurer dans votre dashboard CaurisFlux (Réglages → Webhooks) :<br><code>%s</code>', 'caurisflux-wp' ),
+					__( 'À configurer dans votre dashboard CaurisFlux (Réglages → Webhooks) :<br><code>%s</code>', 'caurisflux-for-woocommerce' ),
 					esc_html( $webhook_url )
 				),
 			),
@@ -108,19 +108,19 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 				'type' => 'caurisflux_test_webhook',
 			),
 			'auto_capture_phone'  => array(
-				'title'   => __( 'Numéro de téléphone du client', 'caurisflux-wp' ),
+				'title'   => __( 'Numéro de téléphone du client', 'caurisflux-for-woocommerce' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Pré-remplir le numéro depuis la commande WooCommerce', 'caurisflux-wp' ),
+				'label'   => __( 'Pré-remplir le numéro depuis la commande WooCommerce', 'caurisflux-for-woocommerce' ),
 				'default' => 'yes',
 			),
 			'debug'               => array(
-				'title'       => __( 'Logs de debug', 'caurisflux-wp' ),
+				'title'       => __( 'Logs de debug', 'caurisflux-for-woocommerce' ),
 				'type'        => 'checkbox',
-				'label'       => __( 'Activer les logs détaillés', 'caurisflux-wp' ),
+				'label'       => __( 'Activer les logs détaillés', 'caurisflux-for-woocommerce' ),
 				'default'     => 'no',
 				'description' => sprintf(
 					/* translators: %s = link to logs page */
-					__( 'Logs visibles dans %s.', 'caurisflux-wp' ),
+					__( 'Logs visibles dans %s.', 'caurisflux-for-woocommerce' ),
 					'<a href="' . esc_url( admin_url( 'admin.php?page=wc-status&tab=logs' ) ) . '">WooCommerce → Status → Logs</a>'
 				),
 			),
@@ -166,27 +166,27 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 		$nonce    = wp_create_nonce( 'wp_rest' );
 		?>
 		<tr valign="top">
-			<th scope="row" class="titledesc"><?php esc_html_e( 'Tester l\'intégration', 'caurisflux-wp' ); ?></th>
+			<th scope="row" class="titledesc"><?php esc_html_e( 'Tester l\'intégration', 'caurisflux-for-woocommerce' ); ?></th>
 			<td class="forminp">
 				<button type="button" class="button button-secondary" id="caurisflux-test-webhook">
-					<?php esc_html_e( 'Envoyer un webhook de test', 'caurisflux-wp' ); ?>
+					<?php esc_html_e( 'Envoyer un webhook de test', 'caurisflux-for-woocommerce' ); ?>
 				</button>
 				<span id="caurisflux-test-webhook-result" style="margin-left:10px;"></span>
 				<p class="description">
-					<?php esc_html_e( 'Saisissez l\'ID d\'une commande pending pour simuler un payment.completed.', 'caurisflux-wp' ); ?>
+					<?php esc_html_e( 'Saisissez l\'ID d\'une commande pending pour simuler un payment.completed.', 'caurisflux-for-woocommerce' ); ?>
 				</p>
 				<script>
 				(function(){
 					var btn = document.getElementById('caurisflux-test-webhook');
 					if (!btn) return;
 					btn.addEventListener('click', function(){
-						var oid = window.prompt('<?php echo esc_js( __( 'ID de commande WooCommerce :', 'caurisflux-wp' ) ); ?>');
+						var oid = window.prompt('<?php echo esc_js( __( 'ID de commande WooCommerce :', 'caurisflux-for-woocommerce' ) ); ?>');
 						if (!oid) return;
-						var event = window.prompt('<?php echo esc_js( __( 'Event à simuler :', 'caurisflux-wp' ) ); ?>', 'payment.completed');
+						var event = window.prompt('<?php echo esc_js( __( 'Event à simuler :', 'caurisflux-for-woocommerce' ) ); ?>', 'payment.completed');
 						if (!event) return;
 						btn.disabled = true;
 						var status = document.getElementById('caurisflux-test-webhook-result');
-						status.textContent = '<?php echo esc_js( __( 'Envoi en cours…', 'caurisflux-wp' ) ); ?>';
+						status.textContent = '<?php echo esc_js( __( 'Envoi en cours…', 'caurisflux-for-woocommerce' ) ); ?>';
 						fetch('<?php echo esc_url_raw( $rest_url ); ?>', {
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': '<?php echo esc_js( $nonce ); ?>' },
@@ -215,13 +215,13 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 	public function process_payment( $order_id ): array {
 		$order = wc_get_order( (int) $order_id );
 		if ( ! $order ) {
-			wc_add_notice( __( 'Commande introuvable.', 'caurisflux-wp' ), 'error' );
+			wc_add_notice( __( 'Commande introuvable.', 'caurisflux-for-woocommerce' ), 'error' );
 			return array( 'result' => 'failure' );
 		}
 
 		$client = $this->client_override ?? CaurisFlux_Client::from_settings();
 		if ( ! $client ) {
-			wc_add_notice( __( 'Configuration CaurisFlux invalide. Contactez le marchand.', 'caurisflux-wp' ), 'error' );
+			wc_add_notice( __( 'Configuration CaurisFlux invalide. Contactez le marchand.', 'caurisflux-for-woocommerce' ), 'error' );
 			return array( 'result' => 'failure' );
 		}
 
@@ -239,7 +239,7 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 			'externalReference' => (string) $order->get_id(),
 			'description'       => sprintf(
 				/* translators: %1$s = order number, %2$s = blog name */
-				__( 'Commande #%1$s — %2$s', 'caurisflux-wp' ),
+				__( 'Commande #%1$s — %2$s', 'caurisflux-for-woocommerce' ),
 				$order->get_order_number(),
 				get_bloginfo( 'name' )
 			),
@@ -271,8 +271,8 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 			wc_add_notice(
 				sprintf(
 					/* translators: %s = error message from API */
-					__( 'Échec initialisation du paiement : %s', 'caurisflux-wp' ),
-					$response['error'] ?? __( 'erreur inconnue', 'caurisflux-wp' )
+					__( 'Échec initialisation du paiement : %s', 'caurisflux-for-woocommerce' ),
+					$response['error'] ?? __( 'erreur inconnue', 'caurisflux-for-woocommerce' )
 				),
 				'error'
 			);
@@ -285,7 +285,7 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 
 		if ( '' === $checkout_url ) {
 			CaurisFlux_Logger::error( '[Gateway] redirectUrl manquant dans la réponse API', array( 'response' => $payload_data ) );
-			wc_add_notice( __( 'Réponse CaurisFlux invalide (URL de checkout manquante).', 'caurisflux-wp' ), 'error' );
+			wc_add_notice( __( 'Réponse CaurisFlux invalide (URL de checkout manquante).', 'caurisflux-for-woocommerce' ), 'error' );
 			return array( 'result' => 'failure' );
 		}
 
@@ -299,7 +299,7 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 			'pending',
 			sprintf(
 				/* translators: %s = transaction id */
-				__( 'Paiement CaurisFlux initié. Transaction : %s', 'caurisflux-wp' ),
+				__( 'Paiement CaurisFlux initié. Transaction : %s', 'caurisflux-for-woocommerce' ),
 				$transaction_id
 			)
 		);
