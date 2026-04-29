@@ -22,10 +22,13 @@ final class CaurisFlux_Client {
 	private const ENDPOINT_LIVE     = 'https://prod-api.caurisflux.com/api/v1';
 	private const ENDPOINT_SANDBOX  = 'https://sandbox-api.caurisflux.com/api/v1';
 	private const MAX_RETRIES       = 3;
-	private const BACKOFF_BASE_MS   = 500; // 500ms, 1s, 2s
+	private const BACKOFF_BASE_MS = 500; // 500ms, 1s, 2s
 
+	/** @var string */
 	private string $api_key;
+	/** @var string */
 	private string $base_url;
+	/** @var string */
 	private string $env;
 
 	public function __construct( string $api_key, string $env = 'live' ) {

@@ -100,7 +100,7 @@ final class CaurisFlux_Webhook {
 		$is_sandbox = 'sandbox' === CaurisFlux_Settings::environment();
 
 		// 1. Secret obligatoire (sandbox accepte aussi un secret vide pour faciliter
-		//    les tests, mais log un warning sévère).
+		// les tests, mais log un warning sévère).
 		if ( '' === $secret ) {
 			if ( ! $is_sandbox ) {
 				CaurisFlux_Logger::error(
@@ -114,8 +114,8 @@ final class CaurisFlux_Webhook {
 		}
 
 		// 2. Vérification signature. Le backend CaurisFlux signe `timestamp.body`
-		//    (Stripe-style). Pour rétro-compat on accepte aussi un HMAC sur le
-		//    body seul (pour les anciens webhooks ou tests manuels).
+		// (Stripe-style). Pour rétro-compat on accepte aussi un HMAC sur le
+		// body seul (pour les anciens webhooks ou tests manuels).
 		if ( '' !== $secret ) {
 			$valid = self::verify_signature( $timestamp . '.' . $raw_body, $signature, $secret )
 				|| self::verify_signature( $raw_body, $signature, $secret );
@@ -207,7 +207,14 @@ final class CaurisFlux_Webhook {
 		);
 
 		$normalized_event = str_replace( '.', '_', $event );
-		do_action( "caurisflux_webhook_event_{$normalized_event}", $data, array( 'event' => $event, 'data' => $data ) );
+		do_action(
+			"caurisflux_webhook_event_{$normalized_event}",
+			$data,
+			array(
+				'event' => $event,
+				'data' => $data,
+			)
+		);
 
 		return new WP_REST_Response(
 			array(
@@ -238,6 +245,9 @@ final class CaurisFlux_Webhook {
 	// Default event handlers
 	// =====================================================================
 
+	/**
+	 * Marque la commande comme payée (event payment.success / payment.completed).
+	 */
 	public static function on_payment_completed( array $data, array $payload ): void {
 		$order = self::resolve_order( $data );
 		if ( ! $order ) {

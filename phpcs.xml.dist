@@ -14,6 +14,19 @@
 	<rule ref="WordPress">
 		<exclude name="WordPress.Files.FileName"/>
 		<exclude name="Universal.Files.SeparateFunctionsFromOO.Mixed"/>
+
+		<!--
+			Le code utilise les types nominaux (PHP 7.4+) qui remplacent
+			largement les docblocks descriptifs. On garde la lisibilité avec
+			des phpdocs sur les API publiques importantes uniquement.
+		-->
+		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+		<exclude name="Squiz.Commenting.ClassComment.Missing"/>
+		<exclude name="Squiz.Commenting.FunctionComment.Missing"/>
+		<exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
+		<exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
+		<exclude name="Squiz.Commenting.VariableComment.Missing"/>
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/>
 	</rule>
 
 	<config name="testVersion" value="7.4-"/>
@@ -23,7 +36,9 @@
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="caurisflux-wp"/>
+			<property name="text_domain" type="array">
+				<element value="caurisflux-wp"/>
+			</property>
 		</properties>
 	</rule>
 </ruleset>

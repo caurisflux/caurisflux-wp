@@ -12,7 +12,11 @@ defined( 'ABSPATH' ) || exit;
 
 final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 
-	/** Permet d'injecter un client custom (testabilité). */
+	/**
+	 * Permet d'injecter un client custom (testabilité).
+	 *
+	 * @var CaurisFlux_Client|null
+	 */
 	private ?CaurisFlux_Client $client_override = null;
 
 	public function __construct() {
@@ -308,5 +312,4 @@ final class CaurisFlux_Gateway extends WC_Payment_Gateway {
 			'redirect' => $checkout_url,
 		);
 	}
-
 }
