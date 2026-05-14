@@ -38,6 +38,10 @@ final class CaurisFlux_Plugin {
 		// sur ?page=wc-settings&tab=checkout&section=caurisflux pour éviter
 		// toute fuite vers les autres pages admin.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+
+		// Scoped frontend CSS — only on cart / checkout / order-pay so we
+		// constrain our own gateway icon and never leak to other inputs.
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_assets' ) );
 	}
 
 	public function register_gateway( array $gateways ): array {
@@ -49,26 +53,31 @@ final class CaurisFlux_Plugin {
 		$settings_url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=caurisflux' );
 		array_unshift(
 			$links,
-			'<a href="' . esc_url( $settings_url ) . '">' . esc_html__( 'Réglages', 'caurisflux-for-woocommerce' ) . '</a>'
+			'<a href="' . esc_url( $settings_url ) . '">' . esc_html__( 'Settings', 'caurisflux-for-woocommerce' ) . '</a>'
 		);
 		return $links;
 	}
 
 	/**
-	 * Enqueue admin CSS uniquement sur :
-	 *   - la page settings du gateway (?page=wc-settings&tab=checkout&section=caurisflux)
-	 *   - la page de détail d'une commande WooCommerce (legacy + HPOS)
+	 * Enqueue admin assets only on:
+	 *   - the gateway settings page (?page=wc-settings&tab=checkout&section=caurisflux)
+	 *   - the WooCommerce order detail page (legacy + HPOS)
 	 *
-	 * Tous les sélecteurs CSS sont scopés (.cflux-*, ou wrappés par
-	 * `.woocommerce_page_wc-settings`/`#caurisflux_order_metabox`) → aucune
-	 * fuite possible vers le frontend ou les autres pages admin.
+	 * All CSS selectors are scoped (.cflux-*, or wrapped by
+	 * `.woocommerce_page_wc-settings`/`#caurisflux_order_metabox`) — no leak
+	 * to the frontend or other admin pages.
+	 *
+	 * @param string $hook Current admin page hook.
 	 */
 	public function enqueue_admin_assets( string $hook ): void {
 		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
+		$tab     = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
 		$is_settings = ( false !== strpos( $hook, 'wc-settings' ) )
-			&& 'checkout' === ( isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '' )
-			&& 'caurisflux' === ( isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : '' );
+			&& 'checkout' === $tab
+			&& 'caurisflux' === $section;
 
 		$is_order_screen = $current_screen && in_array(
 			$current_screen->id,
@@ -89,6 +98,78 @@ final class CaurisFlux_Plugin {
 		wp_enqueue_style(
 			'caurisflux-admin',
 			CAURISFLUX_PLUGIN_URL . 'assets/css/admin.css',
+			array(),
+			CAURISFLUX_VERSION
+		);
+
+		if ( $is_settings ) {
+			wp_enqueue_script(
+				'caurisflux-admin-test-webhook',
+				CAURISFLUX_PLUGIN_URL . 'assets/js/admin-test-webhook.js',
+				array(),
+				CAURISFLUX_VERSION,
+				true
+			);
+			wp_localize_script(
+				'caurisflux-admin-test-webhook',
+				'CaurisFluxTestWebhook',
+				array(
+					'restUrl' => esc_url_raw( rest_url( 'caurisflux/v1/webhook/test' ) ),
+					'nonce'   => wp_create_nonce( 'wp_rest' ),
+					'i18n'    => array(
+						'orderIdPrompt' => __( 'WooCommerce order ID:', 'caurisflux-for-woocommerce' ),
+						'eventPrompt'   => __( 'Event to simulate:', 'caurisflux-for-woocommerce' ),
+						'sending'       => __( 'Sending…', 'caurisflux-for-woocommerce' ),
+					),
+				)
+			);
+		}
+
+		if ( $is_order_screen ) {
+			wp_enqueue_script(
+				'caurisflux-admin-order-metabox',
+				CAURISFLUX_PLUGIN_URL . 'assets/js/admin-order-metabox.js',
+				array(),
+				CAURISFLUX_VERSION,
+				true
+			);
+			wp_localize_script(
+				'caurisflux-admin-order-metabox',
+				'CaurisFluxOrderMetabox',
+				array(
+					'ajaxUrl' => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
+					'i18n'    => array(
+						'checking' => __( 'Checking…', 'caurisflux-for-woocommerce' ),
+						'ok'       => __( 'OK', 'caurisflux-for-woocommerce' ),
+						'error'    => __( 'Error', 'caurisflux-for-woocommerce' ),
+					),
+				)
+			);
+		}
+	}
+
+	/**
+	 * Enqueue the scoped frontend stylesheet on the pages where our gateway
+	 * may actually render (cart, checkout, order-pay, order-received). Every
+	 * selector in the file is scoped to the CaurisFlux gateway, so loading
+	 * the file is safe — but we still limit it to the pages that need it.
+	 */
+	public function enqueue_frontend_assets(): void {
+		if ( ! function_exists( 'is_checkout' ) ) {
+			return;
+		}
+
+		if ( ! ( is_checkout() || is_cart() || is_wc_endpoint_url( 'order-pay' ) || is_wc_endpoint_url( 'order-received' ) ) ) {
+			return;
+		}
+
+		if ( ! CaurisFlux_Settings::is_enabled() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'caurisflux-frontend',
+			CAURISFLUX_PLUGIN_URL . 'assets/css/frontend.css',
 			array(),
 			CAURISFLUX_VERSION
 		);

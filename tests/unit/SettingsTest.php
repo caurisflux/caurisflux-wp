@@ -157,12 +157,28 @@ final class SettingsTest extends TestCase {
 		$this->assertStringContainsString( 'Webhook secret', $err );
 	}
 
-	public function test_configuration_error_when_sandbox_without_secret_is_ok(): void {
+	public function test_configuration_error_when_sandbox_without_secret_is_reported(): void {
 		$this->set_options(
 			array(
-				'enabled'     => 'yes',
-				'environment' => 'sandbox',
-				'api_key'     => 'pk_test_abc:sk_test_xyz',
+				'enabled'        => 'yes',
+				'environment'    => 'sandbox',
+				'api_key'        => 'pk_test_abc:sk_test_xyz',
+				'webhook_secret' => '',
+			)
+		);
+		// Webhook secret is required in every environment so the REST endpoint
+		// cannot be triggered without authentication.
+		$err = CaurisFlux_Settings::configuration_error();
+		$this->assertStringContainsString( 'Webhook secret', $err );
+	}
+
+	public function test_configuration_error_when_sandbox_with_secret_is_ok(): void {
+		$this->set_options(
+			array(
+				'enabled'        => 'yes',
+				'environment'    => 'sandbox',
+				'api_key'        => 'pk_test_abc:sk_test_xyz',
+				'webhook_secret' => 'some-sandbox-secret',
 			)
 		);
 		$this->assertSame( '', CaurisFlux_Settings::configuration_error() );

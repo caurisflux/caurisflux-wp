@@ -93,45 +93,38 @@ final class CaurisFlux_Webhook {
 	 * puis dispatche l'event via une action WP filtrée.
 	 */
 	public static function handle( WP_REST_Request $request ): WP_REST_Response {
-		$raw_body   = $request->get_body();
-		$signature  = self::read_first_header( $request, self::SIGNATURE_HEADERS );
-		$timestamp  = self::read_first_header( $request, self::TIMESTAMP_HEADERS );
-		$secret     = CaurisFlux_Settings::webhook_secret();
-		$is_sandbox = 'sandbox' === CaurisFlux_Settings::environment();
+		$raw_body  = $request->get_body();
+		$signature = self::read_first_header( $request, self::SIGNATURE_HEADERS );
+		$timestamp = self::read_first_header( $request, self::TIMESTAMP_HEADERS );
+		$secret    = CaurisFlux_Settings::webhook_secret();
 
-		// 1. Secret obligatoire (sandbox accepte aussi un secret vide pour faciliter
-		// les tests, mais log un warning sévère).
+		// 1. A webhook secret is required in every environment. Without it we cannot
+		// authenticate the request, so the route would behave like an open endpoint
+		// and let anyone trigger order-state changes.
 		if ( '' === $secret ) {
-			if ( ! $is_sandbox ) {
-				CaurisFlux_Logger::error(
-					'[Webhook] REJETÉ — webhook_secret non configuré en production. Configurez le secret HMAC.'
-				);
-				return new WP_REST_Response( array( 'error' => 'webhook_not_configured' ), 503 );
-			}
-			CaurisFlux_Logger::warning(
-				'[Webhook] sandbox: webhook_secret vide, signature non vérifiée. Configurez-le avant la prod.'
+			CaurisFlux_Logger::error(
+				'[Webhook] REJECTED — webhook_secret is not configured. Set the HMAC secret in the gateway settings.'
 			);
+			return new WP_REST_Response( array( 'error' => 'webhook_not_configured' ), 503 );
 		}
 
-		// 2. Vérification signature. Le backend CaurisFlux signe `timestamp.body`
-		// (Stripe-style). Pour rétro-compat on accepte aussi un HMAC sur le
-		// body seul (pour les anciens webhooks ou tests manuels).
-		if ( '' !== $secret ) {
-			$valid = self::verify_signature( $timestamp . '.' . $raw_body, $signature, $secret )
-				|| self::verify_signature( $raw_body, $signature, $secret );
-			if ( ! $valid ) {
-				CaurisFlux_Logger::warning(
-					'[Webhook] Signature invalide rejetée',
-					array(
-						'received_signature_length' => strlen( $signature ),
-						'has_timestamp'             => '' !== $timestamp,
-					)
-				);
-				return new WP_REST_Response( array( 'error' => 'invalid_signature' ), 401 );
-			}
+		// 2. Signature check. The CaurisFlux backend signs `timestamp.body`
+		// (Stripe-style). For backwards compatibility we also accept an HMAC
+		// computed on the body alone (legacy webhooks / manual tests).
+		$valid = self::verify_signature( $timestamp . '.' . $raw_body, $signature, $secret )
+			|| self::verify_signature( $raw_body, $signature, $secret );
+		if ( ! $valid ) {
+			CaurisFlux_Logger::warning(
+				'[Webhook] Invalid signature, request rejected',
+				array(
+					'received_signature_length' => strlen( $signature ),
+					'has_timestamp'             => '' !== $timestamp,
+				)
+			);
+			return new WP_REST_Response( array( 'error' => 'invalid_signature' ), 401 );
 		}
 
-		// 3. Replay protection si timestamp fourni.
+		// 3. Replay protection when a timestamp is provided.
 		if ( '' !== $timestamp ) {
 			$ts = (int) $timestamp;
 			if ( $ts <= 0 ) {
@@ -140,7 +133,7 @@ final class CaurisFlux_Webhook {
 			$age = time() - $ts;
 			if ( $age > self::TIMESTAMP_TOLERANCE_SECONDS || $age < -self::TIMESTAMP_TOLERANCE_SECONDS ) {
 				CaurisFlux_Logger::warning(
-					"[Webhook] Timestamp hors tolérance ($age s), rejet replay protection"
+					"[Webhook] Timestamp outside tolerance window ($age s), replay protection triggered"
 				);
 				return new WP_REST_Response( array( 'error' => 'timestamp_out_of_window' ), 401 );
 			}
@@ -158,20 +151,20 @@ final class CaurisFlux_Webhook {
 			return new WP_REST_Response( array( 'error' => 'invalid_payload' ), 400 );
 		}
 
-		// 5. Idempotence: hash du body, transient 24h.
+		// 5. Idempotency: hash of the body, transient kept for 24h.
 		$dedup_key = 'caurisflux_evt_' . md5( $raw_body );
 		if ( false !== get_transient( $dedup_key ) ) {
-			CaurisFlux_Logger::info( "[Webhook] Doublon ignoré ($event)" );
+			CaurisFlux_Logger::info( "[Webhook] Duplicate ignored ($event)" );
 			return new WP_REST_Response( array( 'status' => 'duplicate' ), 200 );
 		}
 		set_transient( $dedup_key, '1', DAY_IN_SECONDS );
 
 		CaurisFlux_Logger::info(
-			"[Webhook] Reçu: $event",
+			"[Webhook] Received: $event",
 			array( 'externalReference' => $data['externalReference'] ?? null )
 		);
 
-		// 6. Dispatch via hook WP — extensible et testable.
+		// 6. Dispatch via WP hook — extensible and testable.
 		$normalized_event = str_replace( '.', '_', $event );
 		do_action( "caurisflux_webhook_event_{$normalized_event}", $data, $payload );
 		do_action( 'caurisflux_webhook_event', $event, $data, $payload );
@@ -203,7 +196,7 @@ final class CaurisFlux_Webhook {
 			'amount'                 => (float) $order->get_total(),
 			'currency'               => $order->get_currency(),
 			'failureReason'          => 'simulation',
-			'failureMessage'         => __( 'Webhook simulé depuis l\'admin.', 'caurisflux-for-woocommerce' ),
+			'failureMessage'         => __( 'Webhook simulated from the admin.', 'caurisflux-for-woocommerce' ),
 		);
 
 		$normalized_event = str_replace( '.', '_', $event );
@@ -254,7 +247,7 @@ final class CaurisFlux_Webhook {
 			return;
 		}
 		if ( $order->is_paid() ) {
-			CaurisFlux_Logger::debug( '[Webhook] Commande déjà payée, skip', array( 'order_id' => $order->get_id() ) );
+			CaurisFlux_Logger::debug( '[Webhook] Order already paid, skip', array( 'order_id' => $order->get_id() ) );
 			return;
 		}
 
@@ -271,8 +264,8 @@ final class CaurisFlux_Webhook {
 		$order->payment_complete( $tx_id );
 		$order->add_order_note(
 			sprintf(
-				/* translators: %1$s = transaction id, %2$s = provider */
-				__( 'Paiement CaurisFlux confirmé. Transaction : %1$s. Provider : %2$s.', 'caurisflux-for-woocommerce' ),
+				/* translators: %1$s = transaction id, %2$s = provider name */
+				__( 'CaurisFlux payment confirmed. Transaction: %1$s. Provider: %2$s.', 'caurisflux-for-woocommerce' ),
 				$tx_id,
 				$provider
 			)
@@ -296,8 +289,8 @@ final class CaurisFlux_Webhook {
 		$order->update_status(
 			'failed',
 			sprintf(
-				/* translators: %1$s = event, %2$s = reason, %3$s = message */
-				__( 'CaurisFlux %1$s — raison : %2$s. %3$s', 'caurisflux-for-woocommerce' ),
+				/* translators: %1$s = event name, %2$s = failure reason, %3$s = failure message */
+				__( 'CaurisFlux %1$s — reason: %2$s. %3$s', 'caurisflux-for-woocommerce' ),
 				$event,
 				$reason,
 				$message
@@ -313,12 +306,12 @@ final class CaurisFlux_Webhook {
 		}
 		$amount   = isset( $data['amount'] ) ? (float) $data['amount'] : 0;
 		$currency = (string) ( $data['currency'] ?? $order->get_currency() );
-		$reason   = (string) ( $data['reason'] ?? __( 'Remboursement CaurisFlux', 'caurisflux-for-woocommerce' ) );
+		$reason   = (string) ( $data['reason'] ?? __( 'CaurisFlux refund', 'caurisflux-for-woocommerce' ) );
 
 		$order->add_order_note(
 			sprintf(
-				/* translators: %1$s = amount, %2$s = currency, %3$s = reason */
-				__( 'Remboursement CaurisFlux reçu : %1$s %2$s. Motif : %3$s', 'caurisflux-for-woocommerce' ),
+				/* translators: %1$s = refund amount, %2$s = currency code, %3$s = reason */
+				__( 'CaurisFlux refund received: %1$s %2$s. Reason: %3$s', 'caurisflux-for-woocommerce' ),
 				$amount,
 				$currency,
 				$reason
@@ -354,7 +347,7 @@ final class CaurisFlux_Webhook {
 			}
 		}
 		CaurisFlux_Logger::warning(
-			'[Webhook] Commande introuvable',
+			'[Webhook] Order not found',
 			array(
 				'externalReference' => $external_ref,
 				'transactionId'     => $tx_id,

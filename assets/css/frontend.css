@@ -1,0 +1,35 @@
+/* CaurisFlux — frontend styles.
+   Loaded only on cart / checkout / order-pay pages, and every selector is
+   scoped to the CaurisFlux gateway so we never touch other inputs or rows. */
+
+/* Classic checkout (shortcode) — constrain the icon next to the radio label. */
+.payment_method_caurisflux label img.caurisflux-gateway-icon,
+li.payment_method_caurisflux > label > img {
+	max-height: 24px;
+	width: auto;
+	max-width: 64px;
+	vertical-align: middle;
+	margin-left: 6px;
+	display: inline-block;
+}
+
+/* Description block under the radio. We only style our own description
+   wrapper, never a generic .payment_box. */
+.payment_method_caurisflux .payment_box .cflux-payment-description {
+	margin: 0;
+	padding: 0;
+}
+
+/* Block Checkout (WooCommerce Blocks) — scope by data attribute / class
+   that WC Blocks adds to the payment method node. */
+.wc-block-components-payment-method-label .cflux-block-label img,
+.wc-block-components-payment-method-icon img.cflux-block-icon {
+	max-height: 24px;
+	width: auto;
+	max-width: 48px;
+	vertical-align: middle;
+}
+
+.wc-block-components-payment-method-content .cflux-block-description {
+	margin: 0;
+}

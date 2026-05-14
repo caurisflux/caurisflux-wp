@@ -58,7 +58,7 @@ final class CaurisFlux_Blocks extends \Automattic\WooCommerce\Blocks\Payments\In
 
 	private function build_inline_script(): string {
 		$icon_url = esc_url( CAURISFLUX_PLUGIN_URL . 'assets/images/logo.svg' );
-		$label    = esc_js( __( 'CaurisFlux Mobile Money & Carte Bancaire', 'caurisflux-for-woocommerce' ) );
+		$label    = esc_js( __( 'CaurisFlux Mobile Money & Card', 'caurisflux-for-woocommerce' ) );
 
 		return "(function(){\n"
 			. "  if (!window.wc || !window.wc.wcBlocksRegistry) return;\n"
@@ -70,7 +70,7 @@ final class CaurisFlux_Blocks extends \Automattic\WooCommerce\Blocks\Payments\In
 			. "\n"
 			. "  var Label = function(){\n"
 			. "    return wp.element.createElement('span', { className: 'cflux-block-label' },\n"
-			. "      wp.element.createElement('img', { src: icon, alt: '', style: { width: 24, height: 24, marginRight: 8, verticalAlign: 'middle' } }),\n"
+			. "      wp.element.createElement('img', { src: icon, alt: '', className: 'cflux-block-icon' }),\n"
 			. "      title\n"
 			. "    );\n"
 			. "  };\n"

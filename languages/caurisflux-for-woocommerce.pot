@@ -1,253 +1,380 @@
 # Copyright (C) 2026 Cauris Pay
-# This file is distributed under the same license as the CaurisFlux for WooCommerce plugin.
+# This file is distributed under the GPL-2.0-or-later license.
 msgid ""
 msgstr ""
 "Project-Id-Version: CaurisFlux for WooCommerce 1.0.0\n"
-"Report-Msgid-Bugs-To: https://github.com/caurispay/caurisflux-wp/issues\n"
-"POT-Creation-Date: 2026-04-29 00:00+0000\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/caurisflux-for-woocommerce\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-05-12T00:00:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Language-Team: \n"
-"X-Generator: caurisflux-for-woocommerce 1.0.0\n"
 "X-Domain: caurisflux-for-woocommerce\n"
 
-# == Plugin meta ==
+#: includes/class-caurisflux-order-metabox.php:156
+msgid "API error"
+msgstr ""
+
+#: includes/class-caurisflux-settings.php:75
+msgid "API key is not set."
+msgstr ""
+
+#: includes/class-caurisflux-order-metabox.php:127
+msgid "Access denied."
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:65
+msgid "Appears on the WooCommerce checkout page."
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:24
 msgid "CaurisFlux"
 msgstr ""
 
-msgid "CaurisFlux for WooCommerce"
+#. translators: %1$s = event name, %2$s = failure reason, %3$s = failure message
+#: includes/class-caurisflux-webhook.php:293
+msgid "CaurisFlux %1$s — reason: %2$s. %3$s"
 msgstr ""
 
-# == Activation / version checks ==
-msgid "CaurisFlux nécessite PHP %2$s ou supérieur. Version détectée: %1$s."
+#: includes/class-caurisflux-client.php:193
+msgid "CaurisFlux API error"
 msgstr ""
 
-msgid "CaurisFlux nécessite WordPress %s ou supérieur."
+#: includes/class-caurisflux-gateway.php:87
+msgid "CaurisFlux API key"
 msgstr ""
 
-msgid "CaurisFlux désactivé : PHP %2$s+ requis (vous avez %1$s)."
+#: includes/class-caurisflux-client.php:98
+msgid "CaurisFlux API key is invalid or not configured."
 msgstr ""
 
-msgid "CaurisFlux nécessite WooCommerce activé pour fonctionner."
+#: includes/class-caurisflux-blocks.php:61
+msgid "CaurisFlux Mobile Money & Card"
 msgstr ""
 
-msgid "CaurisFlux : WooCommerce %2$s+ recommandé (vous avez %1$s)."
+#: includes/class-caurisflux-order-metabox.php:144
+msgid "CaurisFlux configuration is invalid."
 msgstr ""
 
-# == Settings page ==
-msgid "Réglages"
+#. translators: %1$s = current PHP version, %2$s = required PHP version
+#: caurisflux-wp.php:148
+msgid "CaurisFlux disabled: PHP %2$s+ required (you have %1$s)."
 msgstr ""
 
-msgid "Activer / Désactiver"
+#: includes/class-caurisflux-gateway.php:215
+msgid "CaurisFlux is not configured correctly. Please contact the merchant."
 msgstr ""
 
-msgid "Activer CaurisFlux pour les paiements"
+#: includes/class-caurisflux-order-metabox.php:38
+msgid "CaurisFlux payment"
 msgstr ""
 
-msgid "Titre affiché au client"
+#. translators: %1$s = transaction id, %2$s = provider name
+#: includes/class-caurisflux-webhook.php:268
+msgid "CaurisFlux payment confirmed. Transaction: %1$s. Provider: %2$s."
 msgstr ""
 
-msgid "Apparaît sur la page de checkout WooCommerce."
+#. translators: %s = transaction id
+#: includes/class-caurisflux-gateway.php:293
+msgid "CaurisFlux payment initiated. Transaction: %s"
 msgstr ""
 
-msgid "Mobile Money & Carte Bancaire"
+#: includes/class-caurisflux-webhook.php:309
+msgid "CaurisFlux refund"
 msgstr ""
 
+#. translators: %1$s = refund amount, %2$s = currency code, %3$s = reason
+#: includes/class-caurisflux-webhook.php:314
+msgid "CaurisFlux refund received: %1$s %2$s. Reason: %3$s"
+msgstr ""
+
+#. translators: %1$s = current PHP version, %2$s = required PHP version
+#: caurisflux-wp.php:67
+msgid "CaurisFlux requires PHP %2$s or higher. Detected version: %1$s."
+msgstr ""
+
+#: caurisflux-wp.php:165
+msgid "CaurisFlux requires WooCommerce to be active."
+msgstr ""
+
+#. translators: %s = required WP version
+#: caurisflux-wp.php:80
+msgid "CaurisFlux requires WordPress %s or higher."
+msgstr ""
+
+#. translators: %1$s = current WooCommerce version, %2$s = required WooCommerce version
+#: caurisflux-wp.php:181
+msgid "CaurisFlux: WooCommerce %2$s+ recommended (you have %1$s)."
+msgstr ""
+
+#. translators: %1$s = status code, %2$s = provider message
+#: includes/class-caurisflux-order-metabox.php:207
+msgid "CaurisFlux: current status = %1$s. %2$s"
+msgstr ""
+
+#. translators: %s = error message
+#: includes/class-caurisflux-order-metabox.php:152
+msgid "CaurisFlux: status check failed (%s)."
+msgstr ""
+
+#. translators: %1$s = status code, %2$s = provider message
+#: includes/class-caurisflux-order-metabox.php:191
+msgid "CaurisFlux: status manually verified → %1$s. %2$s"
+msgstr ""
+
+#. translators: %s = provider message
+#: includes/class-caurisflux-order-metabox.php:176
+msgid "CaurisFlux: status manually verified → SUCCESS. %s"
+msgstr ""
+
+#: includes/class-caurisflux-order-metabox.php:111
+msgid "Check status"
+msgstr ""
+
+#: includes/class-caurisflux-plugin.php:142
+msgid "Checking…"
+msgstr ""
+
+#. translators: %s = webhook URL
+#: includes/class-caurisflux-gateway.php:103
+msgid "Configure this URL in your CaurisFlux dashboard (Settings → Webhooks):<br><code>%s</code>"
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:111
+msgid "Customer phone number"
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:117
+msgid "Debug logs"
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:70
 msgid "Description"
 msgstr ""
 
-msgid "Texte court sous le titre."
+#: includes/class-caurisflux-gateway.php:57
+msgid "Enable / Disable"
 msgstr ""
 
-msgid "Payez avec Wave, Orange Money, MTN, Free Money, Moov ou Carte Bancaire."
+#: includes/class-caurisflux-gateway.php:59
+msgid "Enable CaurisFlux for payments"
 msgstr ""
 
-msgid "Environnement"
+#: includes/class-caurisflux-gateway.php:119
+msgid "Enable detailed logging"
 msgstr ""
 
-msgid "Sandbox (test)"
+#: includes/class-caurisflux-gateway.php:195
+msgid "Enter a pending order ID to simulate a payment.completed event."
 msgstr ""
 
-msgid "Production (live)"
+#: includes/class-caurisflux-gateway.php:77
+msgid "Environment"
 msgstr ""
 
-msgid "Sandbox pour tester sans mouvements de fonds réels."
+#: includes/class-caurisflux-plugin.php:144
+msgid "Error"
 msgstr ""
 
-msgid "Clé API CaurisFlux"
+#: includes/class-caurisflux-plugin.php:121
+msgid "Event to simulate:"
 msgstr ""
 
-msgid "Format <code>pk_xxx:sk_xxx</code> (utilisez les clés <code>pk_test_</code>/<code>sk_test_</code> en sandbox)."
+#. translators: %s = error message from API
+#: includes/class-caurisflux-gateway.php:265
+msgid "Failed to initiate payment: %s"
 msgstr ""
 
-msgid "Secret du webhook"
+#: includes/class-caurisflux-admin-notices.php:40
+msgid "Fix now"
 msgstr ""
 
-msgid "Secret HMAC utilisé pour vérifier l'authenticité des notifications de paiement. <strong>Obligatoire en production.</strong>"
+#: includes/class-caurisflux-gateway.php:89
+msgid "Format <code>pk_xxx:sk_xxx</code> (use <code>pk_test_</code>/<code>sk_test_</code> keys in sandbox)."
 msgstr ""
 
-msgid "URL de webhook"
+#: includes/class-caurisflux-gateway.php:95
+msgid "HMAC secret used to verify the authenticity of payment notifications. <strong>Required.</strong>"
 msgstr ""
 
-msgid "À configurer dans votre dashboard CaurisFlux (Réglages → Webhooks) :<br><code>%s</code>"
+#: includes/class-caurisflux-gateway.php:279
+msgid "Invalid CaurisFlux response (missing checkout URL)."
 msgstr ""
 
-msgid "Numéro de téléphone du client"
+#: includes/class-caurisflux-settings.php:79
+msgid "Invalid format. Expected: pk_xxx:sk_xxx"
 msgstr ""
 
-msgid "Pré-remplir le numéro depuis la commande WooCommerce"
-msgstr ""
-
-msgid "Logs de debug"
-msgstr ""
-
-msgid "Activer les logs détaillés"
-msgstr ""
-
-msgid "Logs visibles dans %s."
-msgstr ""
-
-# == Test webhook button ==
-msgid "Tester l'intégration"
-msgstr ""
-
-msgid "Envoyer un webhook de test"
-msgstr ""
-
-msgid "Saisissez l'ID d'une commande pending pour simuler un payment.completed."
-msgstr ""
-
-msgid "ID de commande WooCommerce :"
-msgstr ""
-
-msgid "Event à simuler :"
-msgstr ""
-
-msgid "Envoi en cours…"
-msgstr ""
-
-msgid "Webhook simulé depuis l'admin."
-msgstr ""
-
-# == Settings validation ==
-msgid "Clé API non renseignée."
-msgstr ""
-
-msgid "Format invalide. Attendu : pk_xxx:sk_xxx"
-msgstr ""
-
-msgid "Sandbox sélectionné mais clés en mode \"live\" détectées. Utilisez des clés pk_test_/sk_test_."
-msgstr ""
-
-msgid "Production sélectionné mais clés en mode \"sandbox\" détectées. Utilisez des clés pk_live_/sk_live_."
-msgstr ""
-
-msgid "Webhook secret manquant. Sans ce secret, les notifications de paiement seront rejetées en production."
-msgstr ""
-
-# == Gateway runtime ==
-msgid "Commande introuvable."
-msgstr ""
-
-msgid "Configuration CaurisFlux invalide. Contactez le marchand."
-msgstr ""
-
-msgid "Échec initialisation du paiement : %s"
-msgstr ""
-
-msgid "Réponse CaurisFlux invalide (URL de checkout manquante)."
-msgstr ""
-
-msgid "Commande #%1$s — %2$s"
-msgstr ""
-
-msgid "Paiement CaurisFlux initié. Transaction : %s"
-msgstr ""
-
-msgid "erreur inconnue"
-msgstr ""
-
-# == Webhook events ==
-msgid "Paiement CaurisFlux confirmé. Transaction : %1$s. Provider : %2$s."
-msgstr ""
-
-msgid "CaurisFlux %1$s — raison : %2$s. %3$s"
-msgstr ""
-
-msgid "Remboursement CaurisFlux"
-msgstr ""
-
-msgid "Remboursement CaurisFlux reçu : %1$s %2$s. Motif : %3$s"
-msgstr ""
-
-# == Order metabox ==
-msgid "CaurisFlux Payment"
-msgstr ""
-
-msgid "Cette commande n'utilise pas CaurisFlux."
-msgstr ""
-
-msgid "SANDBOX"
-msgstr ""
-
+#: includes/class-caurisflux-order-metabox.php:78
 msgid "LIVE"
 msgstr ""
 
-msgid "Statut"
+#. translators: %s = link to the WooCommerce logs page
+#: includes/class-caurisflux-gateway.php:123
+msgid "Logs are visible in %s."
 msgstr ""
 
-msgid "Transaction ID"
+#: includes/class-caurisflux-gateway.php:37
+#: includes/class-caurisflux-gateway.php:66
+msgid "Mobile Money & Card"
 msgstr ""
 
+#: includes/class-caurisflux-gateway.php:25
+msgid "Mobile Money and Card payments through CaurisFlux. Customers are redirected to a secure hosted payment page."
+msgstr ""
+
+#: includes/class-caurisflux-order-metabox.php:139
+msgid "No CaurisFlux transaction is associated with this order."
+msgstr ""
+
+#: includes/class-caurisflux-plugin.php:143
+msgid "OK"
+msgstr ""
+
+#. translators: %1$s = order number, %2$s = site name
+#: includes/class-caurisflux-gateway.php:233
+msgid "Order #%1$s — %2$s"
+msgstr ""
+
+#: includes/class-caurisflux-order-metabox.php:183
+msgid "Order already paid."
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:209
+#: includes/class-caurisflux-order-metabox.php:134
+msgid "Order not found."
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:38
+#: includes/class-caurisflux-gateway.php:73
+msgid "Pay with Wave, Orange Money, MTN, Free Money, Moov or Card."
+msgstr ""
+
+#. translators: %s = status code
+#: includes/class-caurisflux-order-metabox.php:199
+msgid "Payment %s."
+msgstr ""
+
+#: includes/class-caurisflux-order-metabox.php:181
+msgid "Payment confirmed!"
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:113
+msgid "Pre-fill the phone number from the WooCommerce order"
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:81
+msgid "Production (live)"
+msgstr ""
+
+#: includes/class-caurisflux-settings.php:109
+msgid "Production is selected but \"test\" keys were detected. Use pk_live_/sk_live_ keys or switch to Sandbox."
+msgstr ""
+
+#: includes/class-caurisflux-order-metabox.php:98
 msgid "Provider"
 msgstr ""
 
-msgid "Vérifier le statut"
+#: includes/class-caurisflux-order-metabox.php:74
+msgid "SANDBOX"
 msgstr ""
 
-msgid "Accès refusé."
+#: includes/class-caurisflux-gateway.php:80
+msgid "Sandbox (test)"
 msgstr ""
 
-msgid "Nonce invalide."
+#: includes/class-caurisflux-settings.php:106
+msgid "Sandbox is selected but \"live\" keys were detected. Use pk_test_/sk_test_ keys or switch to Production."
 msgstr ""
 
-msgid "CaurisFlux : aucune transaction associée à vérifier."
+#: includes/class-caurisflux-gateway.php:191
+msgid "Send a test webhook"
 msgstr ""
 
-msgid "CaurisFlux : configuration invalide, vérification impossible."
+#: includes/class-caurisflux-plugin.php:122
+msgid "Sending…"
 msgstr ""
 
-msgid "CaurisFlux : échec vérification statut (%s)."
+#: includes/class-caurisflux-plugin.php:56
+msgid "Settings"
 msgstr ""
 
-msgid "CaurisFlux : statut vérifié manuellement → SUCCESS. %s"
+#: includes/class-caurisflux-gateway.php:72
+msgid "Short text shown under the title."
 msgstr ""
 
-msgid "CaurisFlux : statut vérifié manuellement → %1$s. %2$s"
+#: includes/class-caurisflux-order-metabox.php:83
+msgid "Status"
 msgstr ""
 
-msgid "CaurisFlux : statut actuel = %1$s. %2$s"
+#. translators: %s = status code
+#: includes/class-caurisflux-order-metabox.php:166
+msgid "Status: %s"
 msgstr ""
 
-# == Admin notices ==
-msgid "Corriger maintenant"
+#: includes/class-caurisflux-gateway.php:188
+msgid "Test the integration"
 msgstr ""
 
-msgid "L'API CaurisFlux semble indisponible. Les paiements peuvent échouer. Vérifiez le status sur status.caurisflux.com."
+#: includes/class-caurisflux-admin-notices.php:55
+msgid "The CaurisFlux API appears to be unavailable. Payments may fail. Check status.caurisflux.com."
 msgstr ""
 
-# == Client errors ==
-msgid "Clé API CaurisFlux invalide ou non configurée."
+#: includes/class-caurisflux-settings.php:83
+msgid "The public key must start with \"pk_\"."
 msgstr ""
 
-msgid "Impossible de sérialiser la requête en JSON."
+#: includes/class-caurisflux-settings.php:86
+msgid "The secret key must start with \"sk_\"."
 msgstr ""
 
-msgid "Erreur API CaurisFlux"
+#: includes/class-caurisflux-order-metabox.php:58
+msgid "This order does not use CaurisFlux."
 msgstr ""
 
-# == Block label ==
-msgid "CaurisFlux Mobile Money & Carte Bancaire"
+#: includes/class-caurisflux-gateway.php:63
+msgid "Title shown to customers"
 msgstr ""
+
+#: includes/class-caurisflux-order-metabox.php:91
+msgid "Transaction ID"
+msgstr ""
+
+#: includes/class-caurisflux-client.php:127
+msgid "Unable to serialize the request to JSON."
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:84
+msgid "Use sandbox to test without moving real funds."
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:99
+msgid "Webhook URL"
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:93
+msgid "Webhook secret"
+msgstr ""
+
+#: includes/class-caurisflux-settings.php:144
+msgid "Webhook secret is missing. Without this secret, incoming payment notifications will be rejected."
+msgstr ""
+
+#: includes/class-caurisflux-webhook.php:199
+msgid "Webhook simulated from the admin."
+msgstr ""
+
+#. translators: %1$s = currency code, %2$s = comma-separated list of supported currencies
+#: includes/class-caurisflux-settings.php:132
+msgid "WooCommerce currency \"%1$s\" is not supported by CaurisFlux. Supported currencies: %2$s."
+msgstr ""
+
+#: includes/class-caurisflux-plugin.php:120
+msgid "WooCommerce order ID:"
+msgstr ""
+
+#: includes/class-caurisflux-gateway.php:266
+msgid "unknown error"
+msgstr ""
+

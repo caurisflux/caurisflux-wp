@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CaurisFlux for WooCommerce
  * Plugin URI:  https://docs.caurisflux.com/
- * Description: Acceptez les paiements Mobile Money (Wave, Orange Money, MTN, Free Money, Moov…) et Carte Bancaire via CaurisFlux. Multi-devises (XOF/XAF/GHS/NGN), checkout hébergé sécurisé, webhooks signés, mode sandbox.
+ * Description: Accept Mobile Money (Wave, Orange Money, MTN, Free Money, Moov…) and Card payments through CaurisFlux. Multi-currency (XOF/XAF/GHS/NGN), secure hosted checkout, signed webhooks, sandbox mode.
  * Version:     1.0.0
  * Author:      Cauris Pay
  * Author URI:  https://caurisflux.com/
@@ -12,6 +12,7 @@
  * Domain Path: /languages
  * Requires at least: 6.0
  * Requires PHP: 7.4
+ * Requires Plugins: woocommerce
  * WC requires at least: 7.0
  * WC tested up to: 9.4
  *
@@ -62,8 +63,8 @@ register_activation_hook(
 			wp_die(
 				esc_html(
 					sprintf(
-						/* translators: %1$s = current PHP, %2$s = required PHP */
-						__( 'CaurisFlux nécessite PHP %2$s ou supérieur. Version détectée: %1$s.', 'caurisflux-for-woocommerce' ),
+						/* translators: %1$s = current PHP version, %2$s = required PHP version */
+						__( 'CaurisFlux requires PHP %2$s or higher. Detected version: %1$s.', 'caurisflux-for-woocommerce' ),
 						PHP_VERSION,
 						CAURISFLUX_MIN_PHP
 					)
@@ -76,7 +77,7 @@ register_activation_hook(
 				esc_html(
 					sprintf(
 						/* translators: %s = required WP version */
-						__( 'CaurisFlux nécessite WordPress %s ou supérieur.', 'caurisflux-for-woocommerce' ),
+						__( 'CaurisFlux requires WordPress %s or higher.', 'caurisflux-for-woocommerce' ),
 						CAURISFLUX_MIN_WP
 					)
 				)
@@ -135,8 +136,6 @@ add_action(
 add_action( 'plugins_loaded', 'caurisflux_init', 11 );
 
 function caurisflux_init(): void {
-	load_plugin_textdomain( 'caurisflux-for-woocommerce', false, dirname( CAURISFLUX_PLUGIN_BASENAME ) . '/languages' );
-
 	// Runtime PHP version safety net (in case host downgraded).
 	if ( version_compare( PHP_VERSION, CAURISFLUX_MIN_PHP, '<' ) ) {
 		add_action(
@@ -145,8 +144,8 @@ function caurisflux_init(): void {
 				echo '<div class="notice notice-error"><p>';
 				echo esc_html(
 					sprintf(
-						/* translators: %1$s = current PHP version, %2$s = required version */
-						__( 'CaurisFlux désactivé : PHP %2$s+ requis (vous avez %1$s).', 'caurisflux-for-woocommerce' ),
+						/* translators: %1$s = current PHP version, %2$s = required PHP version */
+						__( 'CaurisFlux disabled: PHP %2$s+ required (you have %1$s).', 'caurisflux-for-woocommerce' ),
 						PHP_VERSION,
 						CAURISFLUX_MIN_PHP
 					)
@@ -163,7 +162,7 @@ function caurisflux_init(): void {
 			'admin_notices',
 			static function () {
 				echo '<div class="notice notice-error"><p>';
-				echo esc_html__( 'CaurisFlux nécessite WooCommerce activé pour fonctionner.', 'caurisflux-for-woocommerce' );
+				echo esc_html__( 'CaurisFlux requires WooCommerce to be active.', 'caurisflux-for-woocommerce' );
 				echo '</p></div>';
 			}
 		);
@@ -178,8 +177,8 @@ function caurisflux_init(): void {
 				echo '<div class="notice notice-warning"><p>';
 				echo esc_html(
 					sprintf(
-						/* translators: %1$s = current WC version, %2$s = required version */
-						__( 'CaurisFlux : WooCommerce %2$s+ recommandé (vous avez %1$s).', 'caurisflux-for-woocommerce' ),
+						/* translators: %1$s = current WooCommerce version, %2$s = required WooCommerce version */
+						__( 'CaurisFlux: WooCommerce %2$s+ recommended (you have %1$s).', 'caurisflux-for-woocommerce' ),
 						WC_VERSION,
 						CAURISFLUX_MIN_WC
 					)

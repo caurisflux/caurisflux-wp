@@ -34,15 +34,15 @@ final class CaurisFlux_Admin_Notices {
 		if ( '' !== $config_error ) {
 			$settings_url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=caurisflux' );
 			echo '<div class="notice notice-warning"><p>';
-			echo '<strong>CaurisFlux : </strong>';
+			echo '<strong>CaurisFlux: </strong>';
 			echo esc_html( $config_error );
 			echo ' &nbsp; <a href="' . esc_url( $settings_url ) . '">';
-			echo esc_html__( 'Corriger maintenant', 'caurisflux-for-woocommerce' );
+			echo esc_html__( 'Fix now', 'caurisflux-for-woocommerce' );
 			echo '</a></p></div>';
 			return;
 		}
 
-		// Health check API (transient 1h).
+		// API health check (transient 1h).
 		$health = get_transient( 'caurisflux_health_status' );
 		if ( false === $health ) {
 			$client = CaurisFlux_Client::from_settings();
@@ -51,8 +51,8 @@ final class CaurisFlux_Admin_Notices {
 		}
 		if ( 'down' === $health ) {
 			echo '<div class="notice notice-error"><p>';
-			echo '<strong>CaurisFlux : </strong>';
-			echo esc_html__( 'L\'API CaurisFlux semble indisponible. Les paiements peuvent échouer. Vérifiez le status sur status.caurisflux.com.', 'caurisflux-for-woocommerce' );
+			echo '<strong>CaurisFlux: </strong>';
+			echo esc_html__( 'The CaurisFlux API appears to be unavailable. Payments may fail. Check status.caurisflux.com.', 'caurisflux-for-woocommerce' );
 			echo '</p></div>';
 		}
 	}
